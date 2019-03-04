@@ -9,21 +9,26 @@ using System.Net;
 using System.IO;
 using Poc_Firebase_Solution3.DataAccess;
 using FirebaseSharp.Portable;
+using FirebaseSharp.Portable.Interfaces;
 
 namespace Poc_Firebase_Solution2
 {
     class Program
     {
-
         static void Main(string[] args)
         {
             //while (true)
             //{
                 //SubscribeToNestDeviceDataUpdates();
                 //var json = new JavaScriptSerializer().Serialize(obj);
-                string datetime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+                string date = DateTime.Now.ToString("dd/MM/yyyy");
+                string time = DateTime.Now.ToString("HH:mm:ss");
                 //var json = JsonConvert.SerializeObject({TaskQueueAssign})
-                string acc = "7E1B30A2-DC27-4A00-B42C-67CDA7DAADC9";
+                string acc = "7e1b30a2-dc27-4a00-b42c-67cda7daadc9";
+                string auth = "tUi7rbuh4tHhjrz1HEfMlATKtCu4oli02wIIza4I";
+                string host = "https://claimdibike-1f48a.firebaseio.com/";
+                string parent = "queue_auto_assign";
+                string env = "staging";
                 Guid newGuid = Guid.Parse(acc);
                 var obj = new TaskQueueAssign()
                 {
@@ -33,19 +38,22 @@ namespace Poc_Firebase_Solution2
                             distance = "10KM",
                             scheduleProvinceName= "กรุงเทพ",
                             schedulePlace ="ทดสอบ Place",
+                            scheduleDateText = date,
+                            scheduleTimeText = time,
                             scheduleAmphurName = "อำเภอ 1234",
                             isAccept = false,
                             isReject = false,
                             isTimeOut = false,
                             countTime = 10,
-                            scheduleTimeText = datetime
                         }
                 };
 
                 var json = JsonConvert.SerializeObject(obj);
 
                 //var request = WebRequest.CreateHttp("https://poc-firebase-7735b.firebaseio.com/.json?auth=dJVmRiqZnCsBFyJd9EQ64xOv9cINBCHrYhl6Jv9v");
-                var request = WebRequest.CreateHttp("https://claimdibike-1f48a.firebaseio.com/queue_auto_assign/staging/235276fd-8b1e-43fc-8e3e-ae480cba7777/.json?auth=tUi7rbuh4tHhjrz1HEfMlATKtCu4oli02wIIza4I");
+                //https://claimdibike-1f48a.firebaseio.com/queue_auto_assign/staging
+
+                var request = WebRequest.CreateHttp(host+"/"+ parent +"/"+ env +"/"+ acc +"/.json?auth="+auth);
 
                 request.Method = "PATCH";
                 request.ContentType = "JSON";
@@ -57,6 +65,7 @@ namespace Poc_Firebase_Solution2
 
             //}
         }
+
         //internal static void SubscribeToTasksDataUpdates(string accessToken)
         //{
         //    _accessToken = accessToken;
@@ -69,8 +78,8 @@ namespace Poc_Firebase_Solution2
         //    try
         //    {
         //        _accessToken = "dJVmRiqZnCsBFyJd9EQ64xOv9cINBCHrYhl6Jv9v";
-        //        var firebaseClient = new Firebase("https://poc-firebase-7735b.firebaseio.com/", _accessToken);
-        //        var response = firebaseClient.GetStreaming("Acc_id",
+        //        var firebaseClient = new FirebaseApp("https://poc-firebase-7735b.firebaseio.com/", _accessToken);
+        //        var response = firebaseClient.Child("Acc_id",
         //                changed: (s, e) =>
         //                {
         //                    if (e.Path.Contains("ambient_temperature_f"))

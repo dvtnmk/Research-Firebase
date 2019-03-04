@@ -13,7 +13,7 @@ namespace Poc_Firebase_OnchildChanged
 
             JobQueue<Job> queue = new JobQueue<Job>(app.Child("jobs/job"), job =>
             {
-                Console.WriteLine("[{0}]: {1}", job.Priority, job.Description);
+                Console.WriteLine("-{0}-: {1}", job.Priority, job.Description);
                 return true;
             });
 
@@ -35,7 +35,7 @@ namespace Poc_Firebase_OnchildChanged
                 queue.Enqueue(new Job
                 {
                     Description = String.Format("Job {0}", i),
-                    Priority = rng.Next(),
+                    Priority = i,
                 });
 
                 // Add delay

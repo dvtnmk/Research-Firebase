@@ -26,5 +26,6 @@ namespace Poc_Firebase_Solution3.DataAccess
         public bool isAccept { get; set; }
         public bool isReject { get; set; }
         public bool isTimeOut { get; set; }
+        public string expectTime { get; set; }
     }
 }

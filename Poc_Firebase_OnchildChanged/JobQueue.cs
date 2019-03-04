@@ -19,7 +19,7 @@ namespace Poc_Firebase_OnchildChanged
         public JobQueue(IFirebase jobs, Func<T, bool> callback)
         {
             _jobs = jobs.Child("/");
-
+           
             _query = _jobs
                 .On("child_changed", (snap, child, context) =>
                 {
@@ -37,7 +37,7 @@ namespace Poc_Firebase_OnchildChanged
                             if (callback(data))
                             {
                                 // remove from the queue
-                                snap.Ref().Remove();
+                                //snap.Ref().Remove();
                             }
                         }
                         catch (Exception ex)
